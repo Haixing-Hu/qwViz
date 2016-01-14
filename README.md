@@ -2,7 +2,7 @@
 
 Visualisation of quantum walks on graphs.
 
-This code is originally taken from the folllowing paper:
+This code was originally taken from the folllowing paper:
 
 Scott D. Berry, Paul Bourke and Jingbo B. Wang, [qwViz: visualisation of quantum walks on graphs](http://www.sciencedirect.com/science/article/pii/S0010465511002128), Computer Physics Communications, vol 182, issue 10, 2011, p2295–2302.
 
