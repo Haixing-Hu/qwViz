@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="qwml">
+    <xs:complexType>
+      <xs:sequence>
+	<xs:element name="adjacency" minOccurs="1" maxOccurs="1">
+	  <xs:complexType>
+	    <xs:sequence>
+	      <xs:element name="row">
+		<xs:complexType>
+		  <xs:sequence>
+		    <xs:element name="col">
+		      <xs:simpleType>
+			<xs:restriction base="xs:unsignedInt">
+			  <xs:pattern value="0|1"/>
+			</xs:restriction>
+		      </xs:simpleType>
+		    </xs:element>
+		  </xs:sequence>
+		</xs:complexType>
+	      </xs:element>
+	    </xs:sequence>
+	  </xs:complexType>
+	</xs:element>
+	<xs:element name="probdist" minOccurs="1" maxOccurs="1">
+	  <xs:complexType>
+	    <xs:sequence>
+	      <xs:element name="vertex">
+		 <xs:complexType>
+		   <xs:sequence>
+	      	     <xs:element name="prob">
+		       <xs:simpleType>
+			 <xs:restriction base="xs:double">
+			   <xs:minInclusive value="0.0"/>
+			   <xs:maxInclusive value="1.0"/>
+			 </xs:restriction>
+		       </xs:simpleType>
+		     </xs:element>
+		   </xs:sequence>
+		</xs:complexType>
+	      </xs:element>
+	    </xs:sequence>
+	  </xs:complexType>
+	</xs:element>
+	<xs:element name="graphlayout" minOccurs="0" maxOccurs="1">
+	  <xs:complexType>
+	    <xs:sequence>
+	      <xs:element name="vertex">
+		<xs:complexType>
+		  <xs:sequence>
+		    <xs:element name="xcoord" type="xs:float"/>
+		    <xs:element name="ycoord" type="xs:float"/>
+		  </xs:sequence>
+		</xs:complexType>
+	      </xs:element>
+	    </xs:sequence>
+	  </xs:complexType>
+	</xs:element>
+	<xs:any minOccurs="0"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>

@@ -1,0 +1,73 @@
+
+qwViz 1.0 - Visualisation of quantum walks on graphs
+------------------------------------------------------------
+
+1) THIS software has the following structure of directories:
+
+ /bin - contains the executable file
+ /src - contains the source code
+ /include - contains the header files
+ /obj - contains the object files generated after make
+ /examples - some examples that can be run after installation
+ /qwml - contains functions for writing QWML
+
+2) OTHER files in the qwViz directory are:
+
+ README - this file
+ INSTALL - installation instructions
+ COPYING - the licence agreement
+
+3) AFTER running make we have in bin directory:
+
+ The executable binary:
+ qwViz
+
+4) IN src directory:
+
+ Makefile_Mac
+ Makefile_Linux
+
+ Main program file:
+ qwViz.c
+
+ Specific quantum walk and graph layout files:
+ qw_compute.c
+ qw_graphlayout.c
+ qw_malloc.c
+ qw_readfiles.c
+ qw_render.c
+ qw_writefiles.c
+
+ OpenGL and generic functions:
+ bitmap.c
+ pauls.c
+
+6) AFTER running make we have in obj directory:
+
+ object files ending with .o
+
+7) IN include directory, we have:
+
+ qwViz.h
+ bitmap.h
+ pauls.h
+
+ interfacestring.h
+ optionstring.h
+
+8) IN examples directory, we have
+
+ Several examples of ADJ, QWML input files.
+ An example of a PROB output file. 
+
+9) IN qwml directory, we have
+
+ Functions for writing QWML:
+
+ writeQWML.c
+ writeQWML.f90
+
+ XML Schema for QWML:
+
+ qwml.xsd
+

@@ -1,0 +1,54 @@
+
+ qwViz 1.0 - Visualisation of quantum walks on graphs
+ ------------------------------------------------------------
+
+ Standard installation instructions:
+ ----------------------------------
+ 1. In the qwViz directory, type the commands:
+    cd src
+    cp Makefile_Linux Makefile (or "cp Makefile_Mac Makefile" for Mac users)
+    make
+
+ 2. To remove the object files after compiling, type the command:
+    make clean
+
+ 3. It may be useful to add the bin directory to your default path:
+    If you have installed qwViz in your home directory (~/qwViz) then you 
+    need to do the following.
+
+    In the bash shell, you need to edit ~/.bash_profile or ~/.bashrc to 
+    include the lines:
+        PATH=$PATH:~/qwViz/bin
+        export PATH
+
+    For csh or tcsh, you can add the following line to ~/.cshrc:
+       set PATH = ( ~/qwViz/bin $PATH )
+ 
+ 4. To test the install, examples in qwViz/examples can be executed using
+   
+    qwViz infile.adj or qwViz infile.qwml
+
+ ******************************
+ IMPORTANT: GRAPHVIZ DEPENDENCY:
+ ******************************
+ qwViz depends on Graphviz libraries, which are freely avaliable and licenced 
+ on an open source basis (www.graphviz.org). A standard install of 
+ Graphviz 2.26 from source code places the required libraries in /usr/local/lib
+ and header files in /usr/local/include/graphviz. 
+
+ Mac users can also use MacPorts to install Graphviz, in which case the required
+ libraries will be installed in /opt/local/lib and header files in 
+ /opt/local/include/graphviz.
+
+ Using either of these standard Graphviz installations will allow the required
+ libraries to be automatically linked at compile time.
+
+ Non-standard Graphviz installation:
+ -----------------------------------
+ If for some reason, you do install the Graphviz libraries and header files 
+ in these standard locations, you will need to modify the Makefile in to link 
+ the libraries and include the headers at compile time. 
+
+ It will be useful to know that:
+ The Graphviz header file required is "gvc.h"
+ The Graphviz libraries to be linked are "graph", "cdt", "gvc", "pathplan"
