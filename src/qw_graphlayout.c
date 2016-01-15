@@ -23,11 +23,11 @@
 
 extern OPTIONS options;
 
-/** 
-   Calls GraphViz routines to position the vertices of a graph structure 
-   in 2D, including the allocation of the coordinate lists 
+/**
+   Calls GraphViz routines to position the vertices of a graph structure
+   in 2D, including the allocation of the coordinate lists
 */
-void LayoutGraph(GRAPH *graph) 
+void LayoutGraph(GRAPH *graph)
 {
   GVC_t* gvc = NULL;		/** GraphViz Context pointer    */
   Agraph_t* g = NULL;		/** GraphViz graph pointer      */
@@ -50,56 +50,56 @@ void LayoutGraph(GRAPH *graph)
   nodeArray = malloc( n * sizeof(Agnode_t *));
   if (nodeArray == NULL) {
     fprintf(stderr,"LayoutGraph: NodeArray memory allocation failed.");
-  }		
+  }
   /** Create a GraphViz context. */
   gvc = gvContext();
-	
-  /** Open a graph and add nodes and edges according 
+
+  /** Open a graph and add nodes and edges according
      to the adjacency matrix. */
-  g = agopen("FromAdj",AGRAPH);
+  g = agopen("FromAdj",Agundirected, NULL);
   for (i = 0; i < n; i++) {
     sprintf(num,"%d",i);
-    nodeArray[i] = agnode(g,num); 
+    nodeArray[i] = agnode(g,num,0);
   }
   for (i = 0; i < n; i++) {
     for (j = 0; j <= i; j++) {
       if ((*graph).adj[i][j] == 1) {
-	e = agedge(g, nodeArray[i], nodeArray[j]);
+	e = agedge(g, nodeArray[i], nodeArray[j], NULL, 0);
       }
     }
   }
-  	
+
   /** Call the layout and rendering routines (GraphViz) */
   if (options.debug == TRUE) fprintf(stderr,"LayoutGraph: Calling \
 graphViz - gvLayout...");
-  gvLayout(gvc, g, (*graph).layoutalgorithm); 
-  if (options.debug == TRUE) fprintf(stderr,"done.\n");	
+  gvLayout(gvc, g, (*graph).layoutalgorithm);
+  if (options.debug == TRUE) fprintf(stderr,"done.\n");
   if (options.debug == TRUE) fprintf(stderr,"LayoutGraph: Calling \
 graphViz - gvRender...");
   gvRender(gvc, g, "dot", NULL);
-  if (options.debug == TRUE) fprintf(stderr,"done.\n");	
+  if (options.debug == TRUE) fprintf(stderr,"done.\n");
 
-  if (options.debug == TRUE) 
+  if (options.debug == TRUE)
     fprintf(stderr,"LayoutGraph: Extracting vertex coordinates from \
-GraphViz...");		  
+GraphViz...");
   for (i = 0; i < n; i++) {
     strcpy(stringdata,agget(nodeArray[i],"pos"));
     sscanf(stringdata,"%lf,%lf", &((*graph).Xcoord[i]), &((*graph).Ycoord[i]));
   }
-  if (options.debug == TRUE) fprintf(stderr,"done.\n");	
-	
+  if (options.debug == TRUE) fprintf(stderr,"done.\n");
+
   /** Calculate the size of the bounding box and normalise data */
   strcpy(stringdata,agget(g,"bb"));
   sscanf(stringdata,"%lf,%lf,%lf,%lf", &xmin, &ymin, &xmax, &ymax);
   ScaleCoordinates(graph, xmax, ymax);
   ComputeNodeRadius(graph);
-	
+
   /** Free the layout, close graph and free the context. */
-  if (options.debug == TRUE) 
+  if (options.debug == TRUE)
     fprintf(stderr,"LayoutGraph: Closing GraphViz...");
   free(nodeArray);
-  gvFreeLayout(gvc, g); 
-  agclose(g); 
+  gvFreeLayout(gvc, g);
+  agclose(g);
   err = gvFreeContext(gvc);
   if (options.debug == TRUE) {
     fprintf(stderr,"done.\n");
@@ -107,7 +107,7 @@ GraphViz...");
   }
 }
 /**
-  ScaleCoordinates takes the bounding box of the graph calculated from GraphViz and scales the coordinates to fit in the box (-1,-1) -> (1,1) 
+  ScaleCoordinates takes the bounding box of the graph calculated from GraphViz and scales the coordinates to fit in the box (-1,-1) -> (1,1)
 */
 void ScaleCoordinates(GRAPH *graph, double xmax, double ymax)
 {
@@ -118,7 +118,7 @@ void ScaleCoordinates(GRAPH *graph, double xmax, double ymax)
 
   if (options.debug == TRUE) fprintf(stderr,"LayoutGraph: Scaling \
 coordinates...");
-  if (xmax < ymax) max = ymax;	
+  if (xmax < ymax) max = ymax;
   else max = xmax;
 
   for (i = 0; i < (*graph).nodes; i++) {
@@ -160,14 +160,14 @@ void ScaleCoordinatesFromFile(GRAPH *graph)
   /** make all values non-negative */
   for (i = 0; i < (*graph).nodes; i++) {
     (*graph).Xcoord[i] += fabs(min);
-    (*graph).Ycoord[i] += fabs(min);   
+    (*graph).Ycoord[i] += fabs(min);
   }
 
   /** find max */
   for (i = 0; i < (*graph).nodes; i++) {
-    if (max < (*graph).Xcoord[i]) 
+    if (max < (*graph).Xcoord[i])
       max = (*graph).Xcoord[i];
-    if (max < (*graph).Ycoord[i]) 
+    if (max < (*graph).Ycoord[i])
       max = (*graph).Ycoord[i];
   }
 

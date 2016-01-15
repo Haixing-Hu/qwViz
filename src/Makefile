@@ -7,19 +7,17 @@ bindir = $(exec_prefix)/bin
 srcdir = $(exec_prefix)/src
 objdir = $(exec_prefix)/obj
 
-macportslibdir = /opt/local/lib
-macportsincludedir = /opt/local/include/graphviz
-gvlibdir = /usr/local/lib/ 
+gvlibdir = /usr/local/lib/
 gvincludedir = /usr/local/include/graphviz
 
 # Flags, includes and libraries
 CC = gcc
-CFLAGS = -O2 \
+CFLAGS = -g3 \
 	 -Wall
 
-INCLUDES = -I$(includedir) -I$(macportsincludedir) -I$(gvincludedir)
-LFLAGS =  -L/System/Library/Frameworks/OpenGL.framework/Libraries -L$(macportslibdir) -L$(gvlibdir)
-LIBS = -lGL -lGLU -framework GLUT -framework OpenGL -lm -lgvc -lgraph -lcdt -lpathplan
+INCLUDES = -I$(includedir) -I$(gvincludedir)
+LFLAGS =  -L/System/Library/Frameworks/OpenGL.framework/Libraries -L$(gvlibdir)
+LIBS = -lGL -lGLU -framework GLUT -framework OpenGL -lm -lgvc -lcgraph -lcdt -lpathplan
 
 QWVIZOBJS = $(addprefix $(objdir)/,qwViz.o \
 	bitmap.o \
@@ -44,9 +42,9 @@ $(QWVIZ): $(QWVIZOBJS)
 $(objdir)/%.o: %.c
 	$(CC) $(INCLUDES) $(CFLAGS) -c $< -o $@
 
-$(objdir)/bitmap.o: $(includedir)/bitmap.h 
+$(objdir)/bitmap.o: $(includedir)/bitmap.h
 $(objdir)/pauls.o: $(includedir)/bitmap.h $(includedir)/pauls.h $(objdir)/bitmap.o
-$(objdir)/menus.o: $(includedir)/qwViz.h 
+$(objdir)/menus.o: $(includedir)/qwViz.h
 $(objdir)/misc.o: $(includedir)/qwViz.h $(includedir)/interfacestring.h $(includedir)/optionstring.h
 $(objdir)/qw_readfiles.o: $(includedir)/qwViz.h $(objdir)/qw_malloc.o
 $(objdir)/qw_graphlayout.o: $(includedir)/qwViz.h $(objdir)/qw_malloc.o
@@ -55,7 +53,7 @@ $(objdir)/qw_render.o: $(includedir)/qwViz.h $(objdir)/pauls.o $(objdir)/qw_mall
 $(objdir)/qw_writefiles.o: $(includedir)/qwViz.h
 $(objdir)/qwViz.o: $(includedir)/qwViz.h $(objdir)/pauls.o $(objdir)/qw_malloc.o \
 	$(objdir)/qw_render.o $(objdir)/qw_writefiles.o $(objdir)/qw_readfiles.o $(objdir)/qw_graphlayout.o \
-	$(objdir)/qw_readfiles.o $(objdir)/misc.o $(objdir)/menus.o 
+	$(objdir)/qw_readfiles.o $(objdir)/misc.o $(objdir)/menus.o
 .PHONY: clean uninstall
 clean:
 	rm -vf $(objdir)/*.o $(srcdir)/*~ $(includedir)/*~
