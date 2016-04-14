@@ -59,12 +59,12 @@ void LayoutGraph(GRAPH *graph)
   g = agopen("FromAdj",Agundirected, NULL);
   for (i = 0; i < n; i++) {
     sprintf(num,"%d",i);
-    nodeArray[i] = agnode(g,num,0);
+    nodeArray[i] = agnode(g,num,TRUE);
   }
   for (i = 0; i < n; i++) {
     for (j = 0; j <= i; j++) {
       if ((*graph).adj[i][j] == 1) {
-	e = agedge(g, nodeArray[i], nodeArray[j], NULL, 0);
+	e = agedge(g, nodeArray[i], nodeArray[j], NULL, TRUE);
       }
     }
   }
