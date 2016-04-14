@@ -14,5 +14,16 @@ Since the code was written many years ago, and it cannot be compiled under the r
 
 The author Scott D. Berry allowed me to port the code to the github and fix the compiling issues.
 
-**Currently the code is not fixed yet, I will fix it when I have time.**
+The code was fixed by me and Xiaogang Qiang. Now it works perfectly on the latest Mac OS X (10.11.3).
 
+## Install
+
+You may need to install the following required library before compiling the tool:
+
+- graphviz
+- openGL
+- glut
+
+On Mac OS X only the `graphviz` is required, which can be install via [brew](https://brew.sh).
+
+Then go to the `src` directory and type `make`.
